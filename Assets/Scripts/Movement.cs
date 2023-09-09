@@ -6,7 +6,6 @@ public class Movement : MonoBehaviour
 {
     
     public float moveSpeed = 5f; // Adjust the movement speed as needed
-    // public float jumpForce = 10f;
     private bool isJumping;
     public Rigidbody2D rb;
     private Animator animator;
@@ -26,17 +25,25 @@ public class Movement : MonoBehaviour
     }
 
     void FixedUpdate(){
-        if(moveHorizontal != 0){
-            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+
+        if(Input.GetKey(KeyCode.D)){
+            rb.velocity = new Vector2(1f * moveSpeed, rb.velocity.y);
             animator.SetBool("isRunning", true);
-        }else{
+        }
+
+        if(Input.GetKey(KeyCode.A)){
+            rb.velocity = new Vector2(-1f * moveSpeed, rb.velocity.y);
+            animator.SetBool("isRunning", true);
+        }
+
+        if(moveHorizontal == 0){
             animator.SetBool("isRunning", false);
         }
 
         if (Input.GetKeyDown(KeyCode.W) && !isJumping) // Replace "Jump" with your jump input axis/button
         {
             // Apply an upward force to jump
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.velocity = Vector2.up * jumpForce;
             animator.SetBool("isJumping", true);
         }else{
             animator.SetBool("isJumping", false);

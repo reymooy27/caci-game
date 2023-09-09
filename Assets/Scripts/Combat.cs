@@ -23,18 +23,12 @@ public class Combat : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.Space)){
             Attack();
-
         }
     }
 
     void Attack(){
         if(animator != null){
             animator.SetTrigger("Attack");
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-            foreach(Collider2D enemy in hitEnemies){
-                Debug.Log("Hit " + enemy.name);
-            }
-            
         }
     }
 
@@ -43,6 +37,37 @@ public class Combat : MonoBehaviour
             return;
         }
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    void OnTriggerEnter2D(Collider2D other){
+        if (((1 << other.gameObject.layer) & enemyLayers) != 0)
+        {
+            // Check if the collided object has a Health script
+            Combat targetHealth = other.gameObject.GetComponent<Combat>();
+
+            if (targetHealth != null)
+            {
+                // Deal damage to the target
+                targetHealth.TakeDamage(damage);
+                Debug.Log("Take damage");
+            }
+
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        maxHealth -= damage;
+        if (maxHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // Implement any death logic here
+        Destroy(gameObject);
     }
 
 
