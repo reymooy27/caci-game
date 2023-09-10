@@ -9,30 +9,52 @@ public class Movement : MonoBehaviour
     private bool isJumping;
     public Rigidbody2D rb;
     private Animator animator;
-    public float jumpForce = 10.0f;
+    public float jumpForce = 200f;
     float moveHorizontal;
+    float moveVertical;
+
+    public GameObject player1;
+    public GameObject player2;
+
+    public int playerNumber;
+    private string horizontalAxis;
+    private string verticalAxis;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        horizontalAxis = "Player" + playerNumber + "_Horizontal";
+        verticalAxis = "Player" + playerNumber + "_Vertical";
     }
 
     void Update()
     {
-        moveHorizontal = Input.GetAxis("Horizontal");
+        moveHorizontal = Input.GetAxis(horizontalAxis);
+        moveVertical = Input.GetAxis(verticalAxis);
+
+        if (player2 != null)
+        {
+            if (player1.transform.position.x > player2.transform.position.x)
+            {
+                player1.transform.localScale = new Vector3(-3.45f, 3.45f, 3.45f);
+                player2.transform.localScale = new Vector3(3.45f, 3.45f, 3.45f);
+            }else{
+                player1.transform.localScale = new Vector3(3.45f, 3.45f, 3.45f);
+                player2.transform.localScale = new Vector3(-3.45f, 3.45f, 3.45f);
+            }
+        }
     }
 
     void FixedUpdate(){
 
-        if(Input.GetKey(KeyCode.D)){
-            rb.velocity = new Vector2(1f * moveSpeed, rb.velocity.y);
+        if(moveHorizontal > 0f){
+            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
             animator.SetBool("isRunning", true);
         }
 
-        if(Input.GetKey(KeyCode.A)){
-            rb.velocity = new Vector2(-1f * moveSpeed, rb.velocity.y);
+        if(moveHorizontal < 0f){
+            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
             animator.SetBool("isRunning", true);
         }
 
@@ -40,9 +62,9 @@ public class Movement : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && !isJumping) // Replace "Jump" with your jump input axis/button
+        if (moveVertical > 0.1f && !isJumping)
         {
-            // Apply an upward force to jump
+        
             rb.velocity = Vector2.up * jumpForce;
             animator.SetBool("isJumping", true);
         }else{
@@ -54,11 +76,13 @@ public class Movement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision){
         if(collision.gameObject.tag == "Ground"){
             isJumping = false;
+            Debug.Log("Ground");
         }
     }
     void OnTriggerExit2D(Collider2D collision){
         if(collision.gameObject.tag == "Ground"){
             isJumping = true;
+            Debug.Log("Air");
         }
     }
 }
