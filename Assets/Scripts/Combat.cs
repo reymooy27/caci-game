@@ -9,6 +9,8 @@ public class Combat : MonoBehaviour
     public LayerMask enemyLayers;
     public float damage;
 
+    private bool isCrouching;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +24,33 @@ public class Combat : MonoBehaviour
         if(Input.GetKey(KeyCode.Space)){
             Attack();
         }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("Press S");
+            isCrouching = true;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            Debug.Log("Release S");
+            isCrouching = false;
+        }
+
+        // Update the Animator parameter to control the crouch animation
+        animator.SetBool("isCrouching", isCrouching);
+        
     }
 
     void Attack(){
         if(animator != null){
             animator.SetTrigger("Attack");
+        }
+    }
+
+    void Defend(){
+        if(animator != null){
+            animator.SetBool("isCrouching", true);
         }
     }
 
