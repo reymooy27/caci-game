@@ -8,6 +8,7 @@ public class Combat : MonoBehaviour
     public Animator animator = new Animator();
     public LayerMask enemyLayers;
     public float damage;
+    public AudioSource attackSound;
 
     private bool isCrouching;
 
@@ -45,6 +46,7 @@ public class Combat : MonoBehaviour
     void Attack(){
         if(animator != null){
             animator.SetTrigger("Attack");
+            attackSound.Play();
         }
     }
 
