@@ -29,6 +29,7 @@ public class Health : MonoBehaviour
     private void Die()
     {
         // Implement any death logic here
-        Destroy(gameObject);
+        GameManager.Instance.GameOver(true);
+        //Destroy(gameObject);
     }
 }

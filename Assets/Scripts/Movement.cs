@@ -20,12 +20,17 @@ public class Movement : MonoBehaviour
     private string horizontalAxis;
     private string verticalAxis;
 
+    private GameObject jumpSoundObject;
+    private AudioSource jumpSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         horizontalAxis = "Player" + playerNumber + "_Horizontal";
         verticalAxis = "Player" + playerNumber + "_Vertical";
+        jumpSoundObject = GameObject.Find("JumpSound");
+        jumpSound = jumpSoundObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -44,33 +49,38 @@ public class Movement : MonoBehaviour
                 player2.transform.localScale = new Vector3(-3.45f, 3.45f, 3.45f);
             }
         }
+
     }
 
     void FixedUpdate(){
-
-        if(moveHorizontal > 0f){
-            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
-            animator.SetBool("isRunning", true);
-        }
-
-        if(moveHorizontal < 0f){
-            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
-            animator.SetBool("isRunning", true);
-        }
-
-        if(moveHorizontal == 0){
-            animator.SetBool("isRunning", false);
-        }
-
-        if (moveVertical > 0.1f && !isJumping)
+        if (!GameManager.Instance.IsGameOver())
         {
-        
-            rb.velocity = Vector2.up * jumpForce;
-            animator.SetBool("isJumping", true);
-        }else{
-            animator.SetBool("isJumping", false);
+            if (moveHorizontal > 0f){
+                rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+                animator.SetBool("isRunning", true);
+            }
 
+            if(moveHorizontal < 0f){
+                rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+                animator.SetBool("isRunning", true);
+            }
+
+            if(moveHorizontal == 0){
+                animator.SetBool("isRunning", false);
+            }
+
+            if (moveVertical > 0.1f && !isJumping)
+            {
+        
+                rb.velocity = Vector2.up * jumpForce;
+                animator.SetBool("isJumping", true);
+                jumpSound.Play();
+            }else{
+                animator.SetBool("isJumping", false);
+
+            }
         }
+
     }
 
     void OnTriggerEnter2D(Collider2D collision){
