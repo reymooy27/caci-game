@@ -10,6 +10,7 @@ public class Combat : MonoBehaviour
     public float damage;
     private GameObject attackSoundObject;
     private AudioSource attackSound;
+    private Movement movement;
 
     private bool isCrouching;
 
@@ -17,6 +18,7 @@ public class Combat : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        movement = GetComponent<Movement>();
         damage = 10f;
         attackSoundObject = GameObject.Find("AttackSound");
         attackSound = attackSoundObject.GetComponent<AudioSource>();
@@ -25,23 +27,24 @@ public class Combat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance.IsGameOver())
-        {
-            if (Input.GetKey(KeyCode.Space)){
-                Attack();
-            }
-
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                Debug.Log("Press S");
-                isCrouching = true;
-            }
         
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                Debug.Log("Release S");
-                isCrouching = false;
-            }
+        if (Input.GetKey(KeyCode.Space)){
+            Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("Press S");
+            isCrouching = true;
+            movement.enabled = false;
+            
+        }
+        
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            Debug.Log("Release S");
+            isCrouching = false;
+            movement.enabled = true;
         }
 
         // Update the Animator parameter to control the crouch animation

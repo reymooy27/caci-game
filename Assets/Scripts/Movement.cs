@@ -53,32 +53,29 @@ public class Movement : MonoBehaviour
     }
 
     void FixedUpdate(){
-        if (!GameManager.Instance.IsGameOver())
+        if (moveHorizontal > 0f){
+            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+            animator.SetBool("isRunning", true);
+        }
+
+        if(moveHorizontal < 0f){
+            rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+            animator.SetBool("isRunning", true);
+        }
+
+        if(moveHorizontal == 0){
+            animator.SetBool("isRunning", false);
+        }
+
+        if (moveVertical > 0.1f && !isJumping)
         {
-            if (moveHorizontal > 0f){
-                rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
-                animator.SetBool("isRunning", true);
-            }
-
-            if(moveHorizontal < 0f){
-                rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
-                animator.SetBool("isRunning", true);
-            }
-
-            if(moveHorizontal == 0){
-                animator.SetBool("isRunning", false);
-            }
-
-            if (moveVertical > 0.1f && !isJumping)
-            {
         
-                rb.velocity = Vector2.up * jumpForce;
-                animator.SetBool("isJumping", true);
-                jumpSound.Play();
-            }else{
-                animator.SetBool("isJumping", false);
+            rb.velocity = Vector2.up * jumpForce;
+            animator.SetBool("isJumping", true);
+            jumpSound.Play();
+        }else{
+            animator.SetBool("isJumping", false);
 
-            }
         }
 
     }
