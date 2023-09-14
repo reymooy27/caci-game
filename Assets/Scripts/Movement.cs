@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     
     public float moveSpeed = 5f; // Adjust the movement speed as needed
-    private bool isJumping;
+    public bool isJumping;
     public Rigidbody2D rb;
     private Animator animator;
     public float jumpForce = 200f;
@@ -69,8 +69,9 @@ public class Movement : MonoBehaviour
 
         if (moveVertical > 0.1f && !isJumping)
         {
-        
+            
             rb.velocity = Vector2.up * jumpForce;
+            animator.SetBool("isRunning", false);
             animator.SetBool("isJumping", true);
             jumpSound.Play();
         }else{

@@ -11,8 +11,8 @@ public class Combat : MonoBehaviour
     private GameObject attackSoundObject;
     private AudioSource attackSound;
     private Movement movement;
-
     private bool isCrouching;
+    private string attackButton;
 
     // Start is called before the first frame update
     void Start()
@@ -22,14 +22,23 @@ public class Combat : MonoBehaviour
         damage = 10f;
         attackSoundObject = GameObject.Find("AttackSound");
         attackSound = attackSoundObject.GetComponent<AudioSource>();
+        attackButton = "Player" + movement.playerNumber + "_Attack";
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (Input.GetKey(KeyCode.Space)){
+        if (!movement.isJumping && Input.GetButton(attackButton)){
             Attack();
+        }
+        if (movement.isJumping && Input.GetButton(attackButton))
+        {
+            animator.SetBool("isJumpAttack",true);
+        }
+        if (!movement.isJumping)
+        {
+            animator.SetBool("isJumpAttack", false);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
