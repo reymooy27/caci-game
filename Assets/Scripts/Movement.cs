@@ -84,13 +84,11 @@ public class Movement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision){
         if(collision.gameObject.tag == "Ground"){
             isJumping = false;
-            Debug.Log("Ground");
         }
     }
     void OnTriggerExit2D(Collider2D collision){
         if(collision.gameObject.tag == "Ground"){
             isJumping = true;
-            Debug.Log("Air");
         }
     }
 }

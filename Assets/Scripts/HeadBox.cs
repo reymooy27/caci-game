@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitBox : MonoBehaviour
-
+public class HeadBox : MonoBehaviour
 {
     private Animator animator;
     public GameObject parent;
@@ -19,22 +18,26 @@ public class HitBox : MonoBehaviour
         
     }
 
-     void OnTriggerEnter2D(Collider2D other){
-        // Check if the collided object has a Health script
-        Health targetHealth = other.GetComponent<Health>();
-        if (!GameManager.Instance.IsGameOver())
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.layer == 9)
         {
-            if (targetHealth != null)
+            Health targetHealth = parent.GetComponent<Health>();
+            if (!GameManager.Instance.IsGameOver())
             {
-                // Deal damage to the target
-                targetHealth.TakeDamage(5f);
+                if (targetHealth != null)
+                {
+                    // Deal damage to the target
+                    Debug.Log(other);
+                    targetHealth.TakeDamage(10f);
+                }
             }
         }
-
     }
 
-    void OnTriggerExit2D(Collider2D other){
-        Health targetHealth = other.GetComponent<Health>();
+    void OnTriggerExit2D(Collider2D other)
+    {
+        Health targetHealth = parent.GetComponent<Health>();
         if (!GameManager.Instance.IsGameOver())
         {
             if (targetHealth != null)

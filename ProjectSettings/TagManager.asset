@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Player2
   - Player1
+  - HeadBox
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - UI
   - Player1
   - Player2
-  - 
-  - 
+  - HeadBox
+  - HitBox
   - 
   - 
   - 
