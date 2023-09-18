@@ -6,6 +6,7 @@ public class HeadBox : MonoBehaviour
 {
     private Animator animator;
     public GameObject parent;
+    private Combat combat;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +23,21 @@ public class HeadBox : MonoBehaviour
     {
         if(other.gameObject.layer == 9)
         {
-            Health targetHealth = parent.GetComponent<Health>();
             if (!GameManager.Instance.IsGameOver())
             {
+                Health targetHealth = parent.GetComponent<Health>();
+                combat = parent.GetComponent<Combat>();
                 if (targetHealth != null)
                 {
                     // Deal damage to the target
-                    Debug.Log(other);
-                    targetHealth.TakeDamage(10f);
+                    if (combat.isDefending)
+                    {
+                        targetHealth.TakeDamage(0f);
+                    }   
+                    else
+                    {
+                        targetHealth.TakeDamage(10f);
+                    }
                 }
             }
         }

@@ -11,6 +11,9 @@ public class Health : MonoBehaviour
     public AudioSource hurtSound;
     public GameObject bloodFx;
     private Animator anim;
+    private Movement movement;
+    private Combat combat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +21,8 @@ public class Health : MonoBehaviour
         hurtSoundObject = GameObject.Find("HurtSound");
         hurtSound = hurtSoundObject.GetComponent<AudioSource>();
         Animator anim = bloodFx.GetComponent<Animator>();
+        movement = GetComponent<Movement>();
+        combat = GetComponent<Combat>();
     }
 
     // Update is called once per frame
@@ -35,6 +40,10 @@ public class Health : MonoBehaviour
         hurtSound.Play();
         if (maxHealth <= 0)
         {
+            animator.SetBool("hurt", false);
+            animator.SetBool("isDeath", true);
+            movement.enabled = false;
+            combat.enabled = false;
             Die();
         }
     }

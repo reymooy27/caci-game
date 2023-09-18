@@ -11,7 +11,7 @@ public class Combat : MonoBehaviour
     private GameObject attackSoundObject;
     private AudioSource attackSound;
     private Movement movement;
-    private bool isCrouching;
+    public bool isDefending;
     private string attackButton;
     private string crouchButton;
 
@@ -37,6 +37,7 @@ public class Combat : MonoBehaviour
         if (movement.isJumping && Input.GetButton(attackButton))
         {
             animator.SetBool("isJumpAttack",true);
+            attackSound.Play();
         }
         if (!movement.isJumping)
         {
@@ -45,19 +46,22 @@ public class Combat : MonoBehaviour
 
         if (Input.GetButtonDown(crouchButton))
         {
-            isCrouching = true;
+            isDefending = true;
             movement.enabled = false;
             
         }
         
         if (Input.GetButtonUp(crouchButton))
         {
-            isCrouching = false;
+            isDefending = false;
             movement.enabled = true;
         }
 
         // Update the Animator parameter to control the crouch animation
-        animator.SetBool("isCrouching", isCrouching);
+        if (!movement.isJumping)
+        {
+            animator.SetBool("isCrouching", isDefending);
+        }
         
     }
 

@@ -42,11 +42,11 @@ public class Movement : MonoBehaviour
         {
             if (player1.transform.position.x > player2.transform.position.x)
             {
-                player1.transform.localScale = new Vector3(-3.45f, 3.45f, 3.45f);
-                player2.transform.localScale = new Vector3(3.45f, 3.45f, 3.45f);
+                player1.transform.localScale = new Vector3(-2.5f,2.5f, 2.5f);
+                player2.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
             }else{
-                player1.transform.localScale = new Vector3(3.45f, 3.45f, 3.45f);
-                player2.transform.localScale = new Vector3(-3.45f, 3.45f, 3.45f);
+                player1.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+                player2.transform.localScale = new Vector3(-2.5f, 2.5f, 2.5f);
             }
         }
 

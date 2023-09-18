@@ -30,8 +30,8 @@ ScriptedImporter:
     ignoreMipmapLimit: 0
     nPOTScale: 1
     sRGBTexture: 1
-    spriteMode: 2
-    spriteExtrude: 26
+    spriteMode: 1
+    spriteExtrude: 5
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
@@ -71,18 +71,18 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: 
+  - name: character_1
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 0
-      height: 0
-    spriteID: 
+      width: 166
+      height: 189
+    spriteID: 783ad72dfe1211d4c9666bfe8af82e8e
     spriteBone: []
     spriteOutline: []
     vertices: []
