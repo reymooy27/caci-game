@@ -37,7 +37,10 @@ public class Health : MonoBehaviour
         animator.SetBool("hurt", true);
         bloodFx.SetActive(true);
         //anim.StartPlayback();
-        hurtSound.Play();
+        if (!combat.isDefending)
+        {
+            hurtSound.Play();
+        }
         if (maxHealth <= 0)
         {
             animator.SetBool("hurt", false);

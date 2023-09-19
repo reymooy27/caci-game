@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public KODisplay ko;
     public GameObject restartText;
     public float restartDelay = 10f;
+    private bool helpPanelOpen = false;
+    public GameObject helpPanel;
 
     // Start is called before the first frame update
     void Awake()
@@ -37,6 +39,18 @@ public class GameManager : MonoBehaviour
             else
             {
                 PauseGame();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (!helpPanelOpen)
+            {
+                openHelpPanel();
+            }
+            else
+            {
+                closeHelpPanel();
             }
         }
 
@@ -87,20 +101,33 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void RestartGameWithDelay()
-    {
+    //public void RestartGameWithDelay()
+    //{
         // Delay the scene reload by the specified time
-        Invoke("ReloadScene", restartDelay);
-    }
+    //    Invoke("ReloadScene", restartDelay);
+    //}
 
     public void ReloadScene()
     {
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        isGamePaused = false;
+        Time.timeScale = 1f;
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void openHelpPanel()
+    {
+        helpPanelOpen = true;
+        helpPanel.gameObject.SetActive(helpPanelOpen);
+    }
+    public void closeHelpPanel()
+    {
+        helpPanelOpen = false;
+        helpPanel.gameObject.SetActive(helpPanelOpen);
     }
 }
