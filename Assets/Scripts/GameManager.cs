@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
     public float restartDelay = 10f;
     private bool helpPanelOpen = false;
     public GameObject helpPanel;
+    public new AudioSource audio;
+    public AudioSource gameOverSound;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -24,7 +28,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Start(){
-        
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -32,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            audio.Play();
             if (isGamePaused)
             {
                 ResumeGame();
@@ -75,6 +80,7 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(true); // Show the pause menu.
         isGamePaused = true;
         backsound.Pause();
+
     }
 
     public void ResumeGame()
@@ -89,6 +95,7 @@ public class GameManager : MonoBehaviour
     {
         ko.ShowGameOverImage();
         restartText.gameObject.SetActive(true);
+        gameOverSound.Play();
         isGameOver = flag;
 
         //ReloadScene();
@@ -118,6 +125,11 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void openHelpPanel()
